@@ -21,7 +21,7 @@ const showProducts = async() => {
                 <img src="${product.image}" class="card-img-top" alt="..." style="height: 200px">
                 <div class="card-body">
                     <h5 class="card-title">${product.title.slice(0,25)}</h5>
-                    <p class="card-text">${product.description.slice(0, 100)}</p>
+                    <p class="card-text">${product.description.slice(0, 80)}</p>
                 </div>
             </div>
         `;
@@ -29,4 +29,28 @@ const showProducts = async() => {
     });
 };
 
-showProducts()
+// create sidebar to show product category
+const showCategory =async () => {
+    const data =await loadData();
+    const uniqueCategory = []
+    const ul = document.getElementById("ul");
+    data.forEach(product => {
+         if (uniqueCategory.indexOf(product.category) === -1) {
+             uniqueCategory.push(product.category);
+            }
+    });
+
+    uniqueCategory.map( category => {
+        const li = document.createElement("li");
+        li.classList.add("m-3")
+        // li.classList.add("fs-1")
+        li.innerText = category;
+        ul.appendChild(li);
+    })
+    
+}
+
+
+
+showCategory();
+showProducts();
