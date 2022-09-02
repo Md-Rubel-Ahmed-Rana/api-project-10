@@ -57,7 +57,16 @@ const searchProduct = async () => {
     const products = await loadData();
     // clear previous products and show only founded products
     productContainer.textContent = "";
+    // not found message
     const foundProducts = products.filter(product => product.category.includes(searchFeild.value));
+    console.log(foundProducts);
+    const noFound = document.getElementById("not-found");
+    if (foundProducts.length === 0) {
+        noFound.classList.remove("d-none");
+        console.log(foundProducts);
+    }else{
+        noFound.classList.add("d-none");
+    }
     foundProducts.map(product => {
         const productDiv = document.createElement("div");
         productDiv.classList.add("col");
@@ -77,6 +86,7 @@ const searchProduct = async () => {
 // set click event listener to the button
 document.getElementById("search-btn").addEventListener("click", () => {
     searchProduct();
+
     
 })
 
