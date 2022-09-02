@@ -59,13 +59,16 @@ const searchProduct = async () => {
     productContainer.textContent = "";
     // not found message
     const foundProducts = products.filter(product => product.category.includes(searchFeild.value));
-    console.log(foundProducts);
+
     const noFound = document.getElementById("not-found");
     if (foundProducts.length === 0) {
         noFound.classList.remove("d-none");
-        console.log(foundProducts);
+        searchProcess(false)
+        searchFeild.value = ""
     }else{
         noFound.classList.add("d-none");
+        searchProcess(false);
+        searchFeild.value = ""
     }
     foundProducts.map(product => {
         const productDiv = document.createElement("div");
@@ -83,16 +86,30 @@ const searchProduct = async () => {
     })
 }
 
+
+// loader or spinner
+const searchProcess = (isLoading) => {
+    const loader = document.getElementById("loader")
+    if (isLoading) {
+        loader.classList.remove("d-none");
+    } else{
+        loader.classList.add("d-none");
+    }
+}
 // set click event listener to the button
 document.getElementById("search-btn").addEventListener("click", () => {
-    searchProduct();
-
-    
+    const noFound = document.getElementById("not-found");
+    noFound.classList.add("d-none");
+    searchProcess(true)
+    searchProduct(); 
 })
 
 // add event listener to the input field to get product without pressing button
 document.getElementById("search-field").addEventListener("keyup", (event) => {
     if(event.key === "Enter"){
+        const noFound = document.getElementById("not-found");
+        noFound.classList.add("d-none");
+        searchProcess(true)
         searchProduct();
     }
 })
