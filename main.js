@@ -49,8 +49,8 @@ const showCategory =async () => {
     
 }
 
-// set click event listener to the button
-document.getElementById("search-btn").addEventListener("click", async() => {
+// search product
+const searchProduct = async () => {
     // get search input value
     const searchFeild = document.getElementById("search-field");
     // get all the products
@@ -72,7 +72,19 @@ document.getElementById("search-btn").addEventListener("click", async() => {
         `;
         productContainer.appendChild(productDiv);
     })
+}
+
+// set click event listener to the button
+document.getElementById("search-btn").addEventListener("click", () => {
+    searchProduct();
     
+})
+
+// add event listener to the input field to get product without pressing button
+document.getElementById("search-field").addEventListener("keyup", (event) => {
+    if(event.key === "Enter"){
+        searchProduct();
+    }
 })
 showCategory();
 showProducts();
