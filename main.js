@@ -43,14 +43,36 @@ const showCategory =async () => {
     uniqueCategory.map( category => {
         const li = document.createElement("li");
         li.classList.add("m-3")
-        // li.classList.add("fs-1")
         li.innerText = category;
         ul.appendChild(li);
     })
     
 }
 
-
-
+// set click event listener to the button
+document.getElementById("search-btn").addEventListener("click", async() => {
+    // get search input value
+    const searchFeild = document.getElementById("search-field");
+    // get all the products
+    const products = await loadData();
+    // clear previous products and show only founded products
+    productContainer.textContent = "";
+    const foundProducts = products.filter(product => product.category.includes(searchFeild.value));
+    foundProducts.map(product => {
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("col");
+        productDiv.innerHTML = `
+            <div class="card p-3">
+                <img src="${product.image}" class="card-img-top" alt="..." style="height: 200px">
+                <div class="card-body">
+                    <h5 class="card-title">${product.title.slice(0, 25)}</h5>
+                    <p class="card-text">${product.description.slice(0, 80)}</p>
+                </div>
+            </div>
+        `;
+        productContainer.appendChild(productDiv);
+    })
+    
+})
 showCategory();
 showProducts();
